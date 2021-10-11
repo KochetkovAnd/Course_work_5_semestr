@@ -9,7 +9,7 @@ def main_page():
     global result
     global Xs
     if request.method =="GET":
-        return render_template('html\main_page.html')
+        return render_template('html/main_page.html')
     else:
         fn = request.form.get('function')
         x0 = float(request.form.get('x0'))
@@ -19,7 +19,7 @@ def main_page():
         return redirect(url_for('result'))
 
 def second_page():
-    return render_template('html\result_page.html', res=result, Xs=Xs )
+    return render_template('htm/result_page.html', res=result, Xs=Xs )
 
 
     
