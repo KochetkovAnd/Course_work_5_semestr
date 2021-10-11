@@ -19,7 +19,7 @@ def main_page():
         return redirect(url_for('result'))
 
 def second_page():
-    return render_template('htm/result_page.html', res=result, Xs=Xs )
+    return render_template('html/result_page.html', res=result, Xs=Xs )
 
 
     
