@@ -53,6 +53,10 @@ body {
   box-shadow: 0 0 20px #778899;
 }
 
+.error {
+  color: #FF0000;
+}
+
 table {
   width: 100%;
   border: 2px solid #D3D3D3 ;

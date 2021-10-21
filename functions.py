@@ -146,7 +146,10 @@ def recFunction(x, fn):
             s = a / b
         fn = updateStr2(fn, startLeft, endRight, s)
 
-    while fn.find("+") != -1 or fn.find("-") != -1 and fn.rfind("-") != 0: 
+    if fn[0]=="+":
+             fn = fn[1:] 
+
+    while fn.find("+") != -1 or fn.find("-") != -1 and fn.rfind("-") != 0:     
         if fn.find("+") != -1 and fn.find("-") != -1 and fn.rfind("-") != 0:
             if fn.find("+") <  fn[1:].find("-"):
                 startLeft, endLeft, startRight, endRight,  = findLeftRight(fn, fn.find("+"))
@@ -161,7 +164,7 @@ def recFunction(x, fn):
                 a = float(fn[startLeft : endLeft])
                 b = float(fn[startRight : endRight])        
                 s = a - b
-        elif fn.find("+") != -1:
+        elif fn.find("+") != -1:                
             startLeft, endLeft, startRight, endRight,  = findLeftRight(fn, fn.find("+"))
             a = float(fn[startLeft : endLeft])
             b = float(fn[startRight : endRight])        
@@ -171,7 +174,6 @@ def recFunction(x, fn):
                     startLeft, endLeft, startRight, endRight,  = findLeftRight(fn, fn[1 :].find("-"))
                     endLeft += 1
                     startRight += 1
-                    endRight += 1
             else:
                 startLeft, endLeft, startRight, endRight,  = findLeftRight(fn, fn.find("-"))        
             a = float(fn[startLeft : endLeft])
@@ -179,13 +181,23 @@ def recFunction(x, fn):
             s = a - b
 
         fn = fn[: startLeft] + strDeleteE(s) + fn[endRight :]
-    
+     
+
     return fn
 
 def method_chord(fn, x0, e):
     x, xPrev = x0, x0 + e * 2
     Xs = []
-    while abs(x - xPrev) > e: 
+    i = 0 
+    while abs(x - xPrev) > e and i < 500: 
+        test1 = f(x, fn)
+        test2 = f(xPrev, fn)
         x, xPrev =  x - f(x, fn) * (x - xPrev) / (f(x, fn) - f(xPrev, fn)), x   
-        Xs.append((1, x, abs(xPrev - x)))    
+        Xs.append((i, x, abs(xPrev - x)))   
+        i += 1 
+    if(i == 500):
+        return "Корней нет или задана слишком малая погрешность", []
     return x, Xs  
+
+
+print(method_chord("x^3 *((x - 1) / x)", -10, 0.0001)[0])

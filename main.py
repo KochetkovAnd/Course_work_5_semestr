@@ -1,4 +1,5 @@
 from flask import Flask, request, session, render_template, redirect, url_for
+from flask.helpers import flash
 
 from functions import method_chord
 import os
@@ -12,10 +13,34 @@ def main_page():
         return render_template('html/main_page.html')
     else:
         fn = request.form.get('function')
-        x0 = float(request.form.get('x0'))
-        e = float(request.form.get('e'))
-        result, Xs = method_chord(fn, x0, e)
-        return redirect(url_for('result'))
+
+        error = ''
+        
+        x0 = request.form.get('x0')
+        e = request.form.get('e')
+
+        try:
+            x0 = float(x0)
+            try:
+                e = float(e)
+                if e > 0:
+                    try:
+                        result, Xs = method_chord(fn, x0, e)
+                    except:
+                        error = "Ошибка: функция была введена не правильно"
+                else:
+                    error = "Ошибка: погрешность должна быть положительной"
+            except :
+                error = "Ошибка: погрешность должна быть цифрой"
+        except :
+            error = "Ошибка: начальное значение должно быть цифрой"
+
+        if error == "":
+            return redirect(url_for('result'))
+        else:
+            return render_template('html/main_page.html', error=error, function=fn, x0 = x0, e=e)
+        
+        
 
 def second_page():
     return render_template('html/result_page.html', res=result, Xs=Xs )

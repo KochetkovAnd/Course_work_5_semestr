@@ -7,10 +7,13 @@
         <form class="custom_form" method="post" action="/">
             <div>
                 <p>Введите входные данные:</p>
-                <input type="text", name="function", value="", placeholder="Функция">
-                <input type="text", name="x0", value="", placeholder="x0">
-                <input type="text", name="e", value="", placeholder="Погрешность">  
-                <input type="submit" value="Посчитать" >             
+                <input type="text", name="function", value="{{function}}", placeholder="Функция">
+                <input type="text", name="x0", value="{{x0}}", placeholder="x0">
+                <input type="text", name="e", value="{{e}}", placeholder="Погрешность">  
+                <input type="submit" value="Посчитать" >
+
+                <p class="error"> {{ error }}</p>   
+
             </div>
         </form>    
     </body>
