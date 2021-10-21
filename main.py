@@ -13,9 +13,8 @@ def main_page():
     else:
         fn = request.form.get('function')
         x0 = float(request.form.get('x0'))
-        x1 = float(request.form.get('x1'))
         e = float(request.form.get('e'))
-        result, Xs = method_chord(fn, x0, x1, e)
+        result, Xs = method_chord(fn, x0, e)
         return redirect(url_for('result'))
 
 def second_page():

@@ -56,14 +56,14 @@ def updateStr(fn, start, end, n):
             fn = fn[: start] + strDeleteE(n) + fn[end :]
     else:
         fn = fn[: start] + strDeleteE(n) + fn[end :] 
-    return fn  
+    return strDeleteE(fn)  
 
 def updateStr2(fn, start, end, n):
     if n > 0 and (fn[start] == "+" or fn[start] == "-"):
         fn = fn[: start] +"+"+ strDeleteE(n) + fn[end :]
     else:
         fn = fn[: start] + strDeleteE(n) + fn[end :]      
-    return fn
+    return strDeleteE(fn)  
 
 def strDeleteE(x):
     x = str(x)
@@ -75,7 +75,18 @@ def strDeleteE(x):
             x = x[: nDot] + x[nDot + 1 : nE]
             for i in range(0, st):
                 x = x + "0"
-    return x
+        elif x[nE + 1] == "-":
+            st = int(x[nE + 2 :])
+            nDot = x.find(".")
+            ss = "0."
+            for i in range(1, st):
+                ss = ss + "0"
+            if x[0] == "-":
+                x = "-" + ss + x[nDot - 1] + x[nDot + 1 : nE]
+            else:
+                x = ss + x[nDot - 1] + x[nDot + 1 : nE]
+
+    return x 
 
 def recFunction(x, fn):
     while fn.find("(") != -1:
@@ -158,6 +169,9 @@ def recFunction(x, fn):
         else:
             if fn.find("-") == 0:
                     startLeft, endLeft, startRight, endRight,  = findLeftRight(fn, fn[1 :].find("-"))
+                    endLeft += 1
+                    startRight += 1
+                    endRight += 1
             else:
                 startLeft, endLeft, startRight, endRight,  = findLeftRight(fn, fn.find("-"))        
             a = float(fn[startLeft : endLeft])
@@ -168,17 +182,10 @@ def recFunction(x, fn):
     
     return fn
 
-def method_chord(func,xPrev, xCurr, e):
+def method_chord(fn, x0, e):
+    x, xPrev = x0, x0 + e * 2
     Xs = []
-    Xs.append((1, xPrev, 0))
-    Xs.append((2, xCurr, xCurr - xPrev))
-    xNext = xCurr - f(xCurr, func) * (xCurr - xPrev) / (f(xCurr, func) - f(xPrev, func))
-    Xs.append((3, xNext, xNext - xCurr))
-    i = 4
-    while abs(xNext - xCurr) > e:
-        xPrev = xCurr
-        xCurr = xNext
-        xNext = xCurr - f(xCurr, func) * (xCurr - xPrev) / (f(xCurr, func) - f(xPrev, func))
-        Xs.append((i, xNext, xNext - xCurr))
-        i += 1
-    return xNext, Xs
+    while abs(x - xPrev) > e: 
+        x, xPrev =  x - f(x, fn) * (x - xPrev) / (f(x, fn) - f(xPrev, fn)), x   
+        Xs.append((1, x, abs(xPrev - x)))    
+    return x, Xs  
