@@ -1,7 +1,7 @@
 from flask import Flask, request, session, render_template, redirect, url_for
 from flask.helpers import flash
 
-from functions import method_chord
+from functions import *
 import os
 
 result = 0
@@ -17,28 +17,36 @@ def main_page():
         error = ''
         
         x0 = request.form.get('x0')
+        x1 = request.form.get('x1')
         e = request.form.get('e')
 
         try:
             x0 = float(x0)
             try:
-                e = float(e)
-                if e > 0:
-                    try:
-                        result, Xs = method_chord(fn, x0, e)
-                    except:
-                        error = "Ошибка: функция была введена не правильно"
-                else:
-                    error = "Ошибка: погрешность должна быть положительной"
-            except :
-                error = "Ошибка: погрешность должна быть цифрой"
+                x1 = float(x1)
+                try:
+                    e = float(e)
+                    if e > 0:
+                        try:
+                            if checkFor(fn, x0, x1):
+                                result, Xs = method_chord(fn, x0, x1, e)
+                            else:
+                                error = "Ошибка: Значение функции на краях интервала должно иметь разный знак"   
+                        except:
+                            error = "Ошибка: функция была введена не правильно"
+                    else:
+                        error = "Ошибка: погрешность должна быть положительной"
+                except :
+                    error = "Ошибка: погрешность должна быть цифрой"
+            except:
+                error = "Ошибка: первое приближение должно быть цифрой"
         except :
-            error = "Ошибка: начальное значение должно быть цифрой"
+            error = "Ошибка: нулевое приближение должно быть цифрой"
 
         if error == "":
             return redirect(url_for('result'))
         else:
-            return render_template('html/main_page.html', error=error, function=fn, x0 = x0, e=e)
+            return render_template('html/main_page.html', error=error, function=fn, x0 = x0, x1=x1, e=e)
         
         
 
