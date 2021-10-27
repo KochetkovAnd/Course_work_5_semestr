@@ -1,7 +1,7 @@
 from flask import Flask, request, session, render_template, redirect, url_for
 from flask.helpers import flash
 
-from functions import *
+from functions import method_chord, checkFor
 import os
 
 result = 0
@@ -28,7 +28,7 @@ def main_page():
                     e = float(e)
                     if e > 0:
                         try:
-                            if checkFor(fn, x0, x1):
+                            if checkFor(fn, x0, x1):   
                                 result, Xs = method_chord(fn, x0, x1, e)
                             else:
                                 error = "Ошибка: Значение функции на краях интервала должно иметь разный знак"   
@@ -52,9 +52,6 @@ def main_page():
 
 def second_page():
     return render_template('html/result_page.html', res=result, Xs=Xs )
-
-
-    
 
 folder = os.getcwd()
 app = Flask(__name__, template_folder=folder, static_folder=folder) 
