@@ -1,6 +1,6 @@
 <html>
     <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/my_style.css') }}"> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
     </head>
     <body>
         <h1 class="text_big">Решение уравнений методом хорд</h1>
@@ -16,6 +16,15 @@
                 <p class="error"> {{ error }}</p>   
 
             </div>
-        </form>    
+        </form>
+        <br>
+        <form class="custom_form">
+            <p class="info">
+                Нюансы:<br>
+                Левая граница должна быть меньше правой<br>
+                Также знаки функции на границе должны быть различны            
+
+            </p>
+        </form>
     </body>
 </html>

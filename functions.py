@@ -6,14 +6,14 @@ def method_chord(fn, x0, x1, e):
     expr = sympify(fn)
     f = lambdify("x", expr)
 
-    K = 1000000 # число итераций после которых выходит 
+    K = 100000 # число итераций после которых выходит 
     
     Xs = []
     Xs.append((0, x1, f(x1)))
     x, xPrev = x1 - f(x1) * (x1 - x0) / (f(x1) - f(x0)), x1
     Xs.append((1, x, f(x)))
     i = 2 
-    while abs(f(x)) > e and i < K: # Изначально другое условие выхода  abs(x - xPrev) > e and i < K
+    while abs(x - xPrev) > e and i < K:
         x, xPrev =  x - f(x) * (x - x1) / (f(x) - f(x1)), x
         Xs.append((i, x, f(x)))   
         i += 1 
