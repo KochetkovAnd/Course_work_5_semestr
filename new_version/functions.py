@@ -15,7 +15,7 @@ def method_chord(fn, xStart, xFinish, e):
     x0, x1, x2 = xStart, xFinish, xFinish - f(xFinish) * (xFinish - xStart) / (f(xFinish) - f(xStart))
     Xs.append((1, round(x0, printE), round(x1, printE), round(x2, printE), round(f(x2), printE)))
     i = 2 
-    while abs(x2 - x1) > e or abs(x2 - x0) > e and i < K:
+    while abs(f(x2)) > e:
         s = x2 - f(x2) * (x2 - x1) / (f(x2) - f(x1))
         x0, x1, x2 = x1, x2, x2 - f(x2) * (x2 - x1) / (f(x2) - f(x1))
         Xs.append((i, round(x0, printE), round(x1, printE), round(x2, printE), round(f(x2), printE)))  
