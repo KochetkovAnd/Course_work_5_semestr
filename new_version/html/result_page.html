@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
+    </head>
+    <body>
+        <h1 class="text_big">Решение уравнений методом хорд</h1>
+        <form class="custom_form">
+            <div class="outer-div">
+                <p>Результат X = {{ res }}</p> 
+            </div>
+            <table>
+                <tr><th>i</th><th>Xi</th><th>f(Xi)</th></tr>
+                {% for i, x, e in Xs %}
+                    <tr><td>{{ i }}</td><td>{{ x }}</td><td>{{ e }}</td></tr>
+                {% endfor %}
+            </table>             
+        </form>
+           
+    </body>
+</html>

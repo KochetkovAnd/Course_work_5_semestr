@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
+    </head>
+    <body>
+        <h1 class="text_big">Решение уравнений методом хорд</h1>
+        <form class="custom_form" method="post" action="/">
+            <div>
+                <p>Введите входные данные:</p>
+                <input type="text", name="function", value="{{function}}", placeholder="Функция">
+                <input type="text", name="x0", value="{{x0}}", placeholder="Левая граница x0">
+                <input type="text", name="x1", value="{{x1}}", placeholder="Правая граница x1">
+                <input type="text", name="e", value="{{e}}", placeholder="Погрешность">  
+                <input type="submit" value="Посчитать" >
+
+                <p class="error"> {{ error }}</p>   
+
+            </div>
+        </form>
+        <br>
+        <form class="custom_form">
+            <p class="info">
+                Нюансы:<br>
+                Левая граница должна быть меньше правой<br>
+                Также знаки функции на границе должны быть различны            
+
+            </p>
+        </form>
+    </body>
+</html>
