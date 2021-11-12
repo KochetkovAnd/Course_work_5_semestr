@@ -9,9 +9,9 @@
                 <p>Результат X = {{ res }}</p> 
             </div>
             <table>
-                <tr><th>i</th><th>Xi</th><th>f(Xi)</th></tr>
-                {% for i, x, e in Xs %}
-                    <tr><td>{{ i }}</td><td>{{ x }}</td><td>{{ e }}</td></tr>
+                <tr><th>Step</th><th>x0</th><th>x1</th><th>x2</th><th>f(x2)</th></tr>
+                {% for i, x0, x1, x2, f in Xs %}
+                    <tr><td>{{ i }}</td><td>{{ x0 }}</td><td>{{ x1 }}</td><td>{{ x2 }}</td><td>{{ f }}</td></tr>
                 {% endfor %}
             </table>             
         </form>
